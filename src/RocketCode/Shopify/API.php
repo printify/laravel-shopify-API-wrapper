@@ -28,35 +28,46 @@ class API
 	 * @return bool
 	 * @throws \Exception
 	 */
-	public function verifyRequest($data = NULL, $bypassTimeCheck = FALSE)
+    public function verifyRequest($data = NULL, $bypassTimeCheck = FALSE)
     {
         $da = array();
-        if (is_string($data)) {
+        if (is_string($data))
+        {
             $each = explode('&', $data);
-            foreach ($each as $e) {
+            foreach($each as $e)
+            {
                 list($key, $val) = explode('=', $e);
                 $da[$key] = $val;
             }
-        } elseif (is_array($data)) {
+        }
+        elseif (is_array($data))
+        {
             $da = $data;
-        } else {
+        }
+        else
+        {
             throw new \Exception('Data passed to verifyRequest() needs to be an array or URL-encoded string of key/value pairs.');
         }
 
         // Timestamp check; 1 hour tolerance
-        if (!$bypassTimeCheck) {
-            if (($da['timestamp'] - time() > 3600)) {
+        if (!$bypassTimeCheck)
+        {
+            if (($da['timestamp'] - time() > 3600))
+            {
                 throw new \Exception('Timestamp is greater than 1 hour old. To bypass this check, pass TRUE as the second argument to verifyRequest().');
             }
         }
 
-        if (array_key_exists('hmac', $da)) {
+        if (array_key_exists('hmac', $da))
+        {
             // HMAC Validation
             $match = $da['hmac'];
             unset($da['hmac']);
             $queryString = http_build_query($da);
             $calculated = hash_hmac('sha256', $queryString, $this->_API['API_SECRET']);
-        } else {
+        }
+        else
+        {
             // MD5 Validation, to be removed June 1st, 2015
             $queryString = http_build_query(array('code' => $da['code'], 'shop' => $da['shop'], 'timestamp' => $da['timestamp']), NULL, '');
             $match = $da['signature'];
