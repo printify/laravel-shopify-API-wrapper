@@ -1,7 +1,7 @@
 ⚠️ This repo is archived. 
 ===========================
 
-The code is moved to `api` @see [/app/DIS/Infrastructure/Shopify/ApiClient.php](https://github.com/printify/api/blob/3873caf4ea0b0e09b8b1b4e9575d548eed2ebdf4/app/DIS/Infrastructure/Shopify/ApiClient.php)
+The code is moved to `api`.
 
 Laravel / Shopify API Wrapper
 ===========================
